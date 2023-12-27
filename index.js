@@ -51,6 +51,17 @@ app.post("/", (req, res) => {
   res.send("Post api");
 });
 
+app
+  .route("/about/mission")
+  .get((req, res) => {
+    res.send("Mission get");
+  })
+  .post((req, res) => {
+    res.send("Mission post");
+  })
+  .put((req, res) => {
+    res.send("Mission put");
+  });
 app.listen(PORT, () => {
   console.log("app listening on ", PORT);
 });
