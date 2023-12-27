@@ -17,6 +17,9 @@ app.use(router); // your express app can use it
 
 // now you can use router.get/post/delete etc instead of app.get/post/delete
 
+
+
+// Exploring express app object
 app.get("/ejs", (req, res) => {
   res.render("index")
 })
@@ -67,6 +70,20 @@ app
   .put((req, res) => {
     res.send("Mission put");
   });
+
+// Exploring req object
+app.get("/baseUrl", (req, res) => {
+  console.log(req.baseUrl);
+  console.log(req.originalUrl);
+  res.send("url")
+})
+
+app.get("/baseUrl/:id", (req, res) => {
+ console.log(req.query);
+  res.send(req.query.filter)
+} )
+
+
 app.listen(PORT, () => {
   console.log("app listening on ", PORT);
 });
