@@ -1,9 +1,11 @@
 import express, { Router } from "express";
+import cookieParser from "cookie-parser";
 const app = express();
-const admin = express();
+const admin = express()
 const PORT = 5000;
 
 app.use(express.json()); // for Content-Type: "application/json()";
+app.use(cookieParser())
 app.set("view engine", "ejs")
 
 /* app.use(
@@ -81,6 +83,18 @@ app.get("/baseUrl", (req, res) => {
 app.get("/baseUrl/:id", (req, res) => {
  console.log(req.query);
   res.send(req.query.filter)
+} )
+
+app.post("/reqBody", (req, res) => {
+ console.log(req.body);
+ res.send("Request body")
+
+} )
+
+app.get("/cookies", (req, res) => {
+ console.log(req.cookies);
+ res.send("Cookies")
+
 } )
 
 
