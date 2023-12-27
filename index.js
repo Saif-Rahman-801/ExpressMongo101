@@ -4,6 +4,7 @@ const admin = express();
 const PORT = 5000;
 
 app.use(express.json()); // for Content-Type: "application/json()";
+app.set("view engine", "ejs")
 
 /* app.use(
   static(__dirname + "/public/", {
@@ -15,6 +16,10 @@ const router = Router(); // it returns a router object
 app.use(router); // your express app can use it
 
 // now you can use router.get/post/delete etc instead of app.get/post/delete
+
+app.get("/ejs", (req, res) => {
+  res.render("index")
+})
 
 app.param("id", (req, res, next, id) => {
   console.log(id);
