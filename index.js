@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import cookieParser from "cookie-parser";
+import handler from "./handler.js";
 const app = express();
 const admin = express()
 const PORT = 5000;
@@ -94,8 +95,9 @@ app.post("/reqBody", (req, res) => {
 app.get("/cookies", (req, res) => {
  console.log(req.cookies);
  res.send("Cookies")
+})
 
-} )
+app.get("/reqapp", handler )
 
 
 app.listen(PORT, () => {
