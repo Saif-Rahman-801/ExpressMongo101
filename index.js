@@ -18,11 +18,19 @@ app.use(router); // your express app can use it
 
 app.param("id", (req, res, next, id) => {
   console.log(id);
-  next()
+
+  const userDetails = {
+    userId: id,
+    name: "Shakib Al Hasan",
+  };
+  req.userDetails = userDetails;
+  next();
 });
 
 app.get("/user/:id", (req, res) => {
-  res.send("Testing app.param");
+  const details = req.userDetails;
+  console.log(details);
+  res.send(details);
 });
 
 router.get("/router", (req, res) => {
