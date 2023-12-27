@@ -1,10 +1,9 @@
 import express, { Router } from "express";
 const app = express();
-const admin = express()
+const admin = express();
 const PORT = 5000;
 
 app.use(express.json()); // for Content-Type: "application/json()";
-
 
 /* app.use(
   static(__dirname + "/public/", {
@@ -17,8 +16,14 @@ app.use(router); // your express app can use it
 
 // now you can use router.get/post/delete etc instead of app.get/post/delete
 
+app.param("id", (req, res, next, id) => {
+  console.log(id);
+  next()
+});
 
-
+app.get("/user/:id", (req, res) => {
+  res.send("Testing app.param");
+});
 
 router.get("/router", (req, res) => {
   res.send("Hello from router");
@@ -32,8 +37,6 @@ admin.get("/dashboard", (req, res) => {
   console.log(admin.mountpath);
   res.send("Welcome to Dashboard");
 });
-
-
 
 app.post("/", (req, res) => {
   console.log(req.body);
