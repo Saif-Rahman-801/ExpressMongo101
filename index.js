@@ -97,6 +97,12 @@ app.get("/cookies", (req, res) => {
  res.send("Cookies")
 })
 
+app.get("/local", (req, res) => {
+  res.render("index", {
+    name: "Saif Rahman"
+  })
+})
+
 app.get("/reqapp", handler )
 
 
