@@ -1,13 +1,17 @@
 import express, { Router } from "express";
 import cookieParser from "cookie-parser";
 import handler from "./handler.js";
+import newRouter from "./admin.js";
 const app = express();
 const admin = express();
 const PORT = 5000;
 
 app.use(express.json()); // for Content-Type: "application/json()";
 app.use(cookieParser());
+app.use("/newAdmin", newRouter);
 app.set("view engine", "ejs");
+
+
 /* app.use(
   static(__dirname + "/public/", {
     index: "home.html",
