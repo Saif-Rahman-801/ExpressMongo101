@@ -8,7 +8,6 @@ const PORT = 5000;
 app.use(express.json()); // for Content-Type: "application/json()";
 app.use(cookieParser());
 app.set("view engine", "ejs");
-
 /* app.use(
   static(__dirname + "/public/", {
     index: "home.html",
@@ -19,6 +18,51 @@ const router = Router(); // it returns a router object
 app.use(router); // your express app can use it
 
 // now you can use router.get/post/delete etc instead of app.get/post/delete
+
+// Exploring express js Middleware
+const loggerWrapper = (options) => {
+  return (req, res,next) => {
+   if(options.log){
+    console.log(
+      `
+      ${new Date(Date.now()).toLocaleString()} - ${req.method} - ${
+        req.originalUrl
+      } - ${req.protocol} - ${req.ip}
+      `
+    );
+    next()
+   } else {
+    throw new Error("Error") 
+   }
+  }
+}
+
+const myMiddleWare1 = (req, res, next) => {
+  console.log("from middleware1");
+  next();
+};
+const logger = (req, res, next) => {
+  console.log(
+    `
+    ${new Date(Date.now()).toLocaleString()} - ${req.method} - ${
+      req.originalUrl
+    } - ${req.protocol} - ${req.ip}
+    `
+  );
+  next()
+  // throw new Error("Error")
+};
+
+// app.use(myMiddleWare1);
+// app.use(logger);
+app.use(loggerWrapper({log: true}));
+
+const errorMiddleWare = (err, req, res, next) => {
+console.log(err);
+res.status(500).send("Server side error")
+} 
+
+app.use(errorMiddleWare)
 
 // Exploring express app object
 app.get("/ejs", (req, res) => {
@@ -124,18 +168,18 @@ app.get("/local", (req, res) => {
 });
 
 app.get("/cookie", (req, res) => {
-  res.cookie("name", "something")
-  res.end()
-})
+  res.cookie("name", "something");
+  res.end();
+});
 
 app.get("/location", (req, res) => {
-  res.location("/test")
-  res.end()
-})
+  res.location("/test");
+  res.end();
+});
 
 app.get("/obj", (req, res) => {
-  res["send"]("This is obj type") 
-})
+  res["send"]("This is obj type");
+});
 
 app.get("/reqapp", handler);
 
