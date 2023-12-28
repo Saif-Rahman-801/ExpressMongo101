@@ -2,12 +2,12 @@ import express, { Router } from "express";
 import cookieParser from "cookie-parser";
 import handler from "./handler.js";
 const app = express();
-const admin = express()
+const admin = express();
 const PORT = 5000;
 
 app.use(express.json()); // for Content-Type: "application/json()";
-app.use(cookieParser())
-app.set("view engine", "ejs")
+app.use(cookieParser());
+app.set("view engine", "ejs");
 
 /* app.use(
   static(__dirname + "/public/", {
@@ -20,12 +20,10 @@ app.use(router); // your express app can use it
 
 // now you can use router.get/post/delete etc instead of app.get/post/delete
 
-
-
 // Exploring express app object
 app.get("/ejs", (req, res) => {
-  res.render("index")
-})
+  res.render("index");
+});
 
 app.param("id", (req, res, next, id) => {
   console.log(id);
@@ -78,33 +76,54 @@ app
 app.get("/baseUrl", (req, res) => {
   console.log(req.baseUrl);
   console.log(req.originalUrl);
-  res.send("url")
-})
+  res.send("url");
+});
 
 app.get("/baseUrl/:id", (req, res) => {
- console.log(req.query);
-  res.send(req.query.filter)
-} )
+  console.log(req.query);
+  res.send(req.query.filter);
+});
 
 app.post("/reqBody", (req, res) => {
- console.log(req.body);
- res.send("Request body")
-
-} )
+  console.log(req.body);
+  res.send("Request body");
+});
 
 app.get("/cookies", (req, res) => {
- console.log(req.cookies);
- res.send("Cookies")
-})
+  console.log(req.cookies);
+  res.send("Cookies");
+});
 
 app.get("/local", (req, res) => {
-  res.render("index", {
-    name: "Saif Rahman"
-  })
-})
+  res.format({
+    "text/plain": () => {
+      res.send("hello");
+    },
+    "text/html": () => {
+      res.render("index", {
+        name: "Saif Rahman",
+      });
+    },
+    "application/json": () => {
+      res.json({
+        message: "hi",
+      });
+    },
+    default: () => {
+      res.status(406).send("Not acceptable");
+    },
+  });
 
-app.get("/reqapp", handler )
+  // res.render("index", {
+  //   name: "Saif Rahman"
+  // })
+  /*  res.json({
+    name: "Ban"
+  }) */
+  // res.sendStatus(200)
+});
 
+app.get("/reqapp", handler);
 
 app.listen(PORT, () => {
   console.log("app listening on ", PORT);
