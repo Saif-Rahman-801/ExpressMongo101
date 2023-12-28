@@ -123,6 +123,20 @@ app.get("/local", (req, res) => {
   // res.sendStatus(200)
 });
 
+app.get("/cookie", (req, res) => {
+  res.cookie("name", "something")
+  res.end()
+})
+
+app.get("/location", (req, res) => {
+  res.location("/test")
+  res.end()
+})
+
+app.get("/obj", (req, res) => {
+  res["send"]("This is obj type") 
+})
+
 app.get("/reqapp", handler);
 
 app.listen(PORT, () => {
